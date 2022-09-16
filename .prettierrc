@@ -1,0 +1,12 @@
+{
+    "bracketSpacing": true,
+    "printWidth": 80,
+    "singleQuote": true,
+    "trailingComma": "none",
+    "tabWidth": 4,
+    "useTabs": false,
+    "semi": true,
+    "endOfLine": "auto",
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true
+}
