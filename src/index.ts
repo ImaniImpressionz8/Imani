@@ -2,8 +2,8 @@ import 'express-async-errors';
 
 import compression from 'compression';
 import cors from 'cors';
-import helmet from 'helmet';
 import express, { Express, Request, Response } from 'express';
+import helmet from 'helmet';
 
 const port = 3000;
 
