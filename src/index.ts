@@ -5,7 +5,7 @@ import cors from 'cors';
 import express, { Express, Request, Response } from 'express';
 import helmet from 'helmet';
 
-const port = 3000;
+const port = 3030;
 
 const app: Express = express();
 
@@ -14,6 +14,11 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(compression());
+
+app.get('/api', (req, res) => {
+    //Line 9
+    res.json({ user_agent: req.headers['user-agent'] });
+});
 
 app.get('/', (req: Request, res: Response) => {
     return res.send(
