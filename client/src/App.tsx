@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { Home } from './pages';
+import './App.css';
 
 function App() {
     const [data, setData] = useState<{ user_agent?: string }>({});
@@ -22,7 +24,9 @@ function App() {
         return body;
     };
 
-    return <p style={{ fontSize: 12 }}>Hello World, {data?.user_agent}</p>;
+    // return <p style={{ fontSize: 12 }}>Hello World, {data?.user_agent}</p>;
+
+    return <Home />;
 }
 
 export default App;

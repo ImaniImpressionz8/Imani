@@ -5,6 +5,9 @@ import cors from 'cors';
 import express, { Express, Request, Response } from 'express';
 import helmet from 'helmet';
 
+import createMongodbConnection from './controller/db';
+import logger from './util/logger';
+
 const port = 3030;
 
 const app: Express = express();
@@ -15,8 +18,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(compression());
 
+createMongodbConnection().catch((err) => logger.error(err));
+
 app.get('/api', (req, res) => {
-    //Line 9
     res.json({ user_agent: req.headers['user-agent'] });
 });
 
