@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Home } from './pages';
 import './App.css';
+
+import { AuthContextProvider } from './context/';
 
 function App() {
     const [data, setData] = useState<{ user_agent?: string }>({});
@@ -26,7 +28,11 @@ function App() {
 
     // return <p style={{ fontSize: 12 }}>Hello World, {data?.user_agent}</p>;
 
-    return <Home />;
+    return (
+        <AuthContextProvider>
+            <Home />
+        </AuthContextProvider>
+    );
 }
 
 export default App;

@@ -18,26 +18,6 @@ const config = {
                 useUnifiedTopology: true
             }
         }
-    },
-    jwt: {
-        tokenSecretKey: defaultTo('JWT_SECRET_KEY', process.env.JWT_SECRET_KEY),
-        expiresIn: defaultTo('30 minutes', process.env.JWT_EXPIRE_TIME),
-        accessTokenExpireTime: defaultTo(
-            '1d',
-            process.env.JWT_ACCESS_EXPIRE_TIME
-        ),
-        refreshTokenExpireTime: defaultTo(
-            '30d',
-            process.env.JWT_REFRESH_EXPIRE_TIME
-        ),
-        resetPasswordExpiresIn: defaultTo(
-            '30 minutes',
-            process.env.JWT_RESET_PASSWORD_EXPIRE_TIME
-        ),
-        verifyEmailExpiresIn: defaultTo(
-            '30 minutes',
-            process.env.JWT_VERIFY_EMAIL_EXPIRE_TIME
-        )
     }
 };
 
