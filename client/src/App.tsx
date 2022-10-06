@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Home } from './pages';
+import { Desk, Home } from './pages';
 import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { AuthContextProvider } from './context/';
 
@@ -26,11 +27,14 @@ function App() {
         return body;
     };
 
-    // return <p style={{ fontSize: 12 }}>Hello World, {data?.user_agent}</p>;
-
     return (
         <AuthContextProvider>
-            <Home />
+            <Router>
+                <Routes>
+                    <Route index element={<Home />} />
+                    <Route path="/desk" element={<Desk />} />
+                </Routes>
+            </Router>
         </AuthContextProvider>
     );
 }

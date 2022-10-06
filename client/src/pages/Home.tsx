@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import {
     Box,
     StyledText,
@@ -8,14 +9,19 @@ import {
 } from '../components/common';
 
 import { useAuth } from '../context/AuthContext';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const Home = () => {
-    const people = ['Max', 'Amina', 'Rachael'];
+    const { login, getUsers, users } = useAuth();
 
-    const { login } = useAuth();
+    const [password, setPassowrd] = useState<string>();
+    const [username, setUsername] = useState<string>();
 
-    useEffect(() => {}, []);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        getUsers();
+    }, []);
 
     return (
         <Page justifyContent={'center'} alignItems={'center'}>
@@ -39,10 +45,21 @@ const Home = () => {
                     borderColor={'#444444'}
                     borderRadius={5}
                     margin={5}
+                    onChange={(value) => {
+                        setUsername(value);
+                    }}
                 >
-                    {people.map((item, index) => {
-                        return <Option key={index}>{item}</Option>;
-                    })}
+                    {users.map(
+                        (item: {
+                            firstname: string;
+                            _id: string;
+                            username: string;
+                        }) => {
+                            const { _id, username: user } = item;
+
+                            return <Option key={_id}>{user}</Option>;
+                        }
+                    )}
                 </Select>
                 <StyledText margin={5}>Password</StyledText>
                 <Input
@@ -56,6 +73,9 @@ const Home = () => {
                     borderRadius={5}
                     backgroundColor={'#f0f0f0'}
                     margin={5}
+                    onChange={(value: string) => {
+                        setPassowrd(value);
+                    }}
                 />
                 <Input
                     type={'button'}
@@ -71,7 +91,7 @@ const Home = () => {
                     color={'white'}
                     margin={5}
                     onClick={() => {
-                        login();
+                        login(username, password, navigate);
                     }}
                     cursor={'pointer'}
                 />

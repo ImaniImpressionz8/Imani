@@ -9,7 +9,8 @@ const Select = ({
     borderColor,
     borderRadius,
     children,
-    margin
+    margin,
+    onChange
 }: {
     width?: number;
     height?: number;
@@ -21,9 +22,15 @@ const Select = ({
     textAlign?: CSS.Property.TextAlign;
     children: React.ReactNode[];
     margin?: number | string;
+    onChange?: (value: string) => void;
 }) => {
     return (
         <select
+            onChange={(event) => {
+                const { value } = event.target;
+
+                onChange && onChange(value);
+            }}
             style={{
                 width,
                 height,

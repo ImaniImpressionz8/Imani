@@ -14,6 +14,7 @@ const Input = ({
     backgroundColor,
     value,
     onClick,
+    onChange,
     cursor,
     margin,
     color
@@ -31,6 +32,7 @@ const Input = ({
     textAlign?: CSS.Property.TextAlign;
     value?: string;
     onClick?: () => void;
+    onChange?: (text: string) => void;
     cursor?: string;
     margin?: number | string;
     color?: string;
@@ -38,6 +40,11 @@ const Input = ({
     return (
         <input
             onClick={() => onClick && onClick()}
+            onChange={(event) => {
+                const { value } = event.target;
+
+                onChange && onChange(value);
+            }}
             type={type}
             value={value}
             style={{
