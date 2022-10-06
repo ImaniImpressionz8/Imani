@@ -4,18 +4,40 @@ import { deleteUser, getUser, getUsers, saveUser } from '../controller/user';
 
 const router = express.Router();
 
+router.get('/login', async (req: Request, res: Response) => {
+    const { query } = req;
+
+    const { password, username } = query;
+
+    const user = await getUser(username as string);
+
+    // eslint-disable-next-line security/detect-possible-timing-attacks
+    if (user?.password === password)
+        return res.json({
+            data: user,
+            success: true,
+            message: 'User successfully logged in'
+        });
+
+    return res.json({
+        data: null,
+        success: false,
+        message: 'Incorrect user credentials'
+    });
+});
+
 router.get('/', async (req: Request, res: Response) => {
     const users = await getUsers();
 
-    res.json(users);
+    return res.json(users);
 });
 
 router.get('/:_id', async (req: Request, res: Response) => {
     const { params } = req;
 
-    const { _id } = params;
+    const { username } = params;
 
-    const user = await getUser(_id);
+    const user = await getUser(username);
 
     return res.json(user);
 });
@@ -23,11 +45,13 @@ router.get('/:_id', async (req: Request, res: Response) => {
 router.post('/', async (req: Request, res: Response) => {
     const { query } = req;
 
-    const { department, isAdmin, name } = query;
+    const { department, firstname, isAdmin, password, username } = query;
 
     const user = await saveUser(
         department as string,
-        name as string,
+        firstname as string,
+        username as string,
+        password as string,
         isAdmin as unknown as boolean
     );
 
