@@ -1,4 +1,4 @@
-import { Box, Page } from '../components/common';
+import { Box, Page, StyledText } from '../components/common';
 
 const Desk = () => {
     return (
@@ -7,7 +7,9 @@ const Desk = () => {
                 justifyContent={'center'}
                 borderWidth={1}
                 flexDirection={'column'}
-            ></Box>
+            >
+                <StyledText>Desk</StyledText>
+            </Box>
         </Page>
     );
 };

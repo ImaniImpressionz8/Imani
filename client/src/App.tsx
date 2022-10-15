@@ -31,8 +31,9 @@ function App() {
         <AuthContextProvider>
             <Router>
                 <Routes>
-                    <Route index element={<Home />} />
-                    <Route path="/desk" element={<Desk />} />
+                    {/* <Route index element={<Home />} />
+                    <Route path="/desk" element={<Desk />} /> */}
+                    <Route path="/" element={<Desk />} />
                 </Routes>
             </Router>
         </AuthContextProvider>
