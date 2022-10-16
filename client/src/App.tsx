@@ -3,7 +3,12 @@ import { Desk, Home } from './pages';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import { AuthContextProvider } from './context/';
+import {
+    AuthContextProvider,
+    UserContextProvider,
+    ProductContextProvider,
+    OrderContextProvider
+} from './context/';
 
 function App() {
     const [data, setData] = useState<{ user_agent?: string }>({});
@@ -29,13 +34,19 @@ function App() {
 
     return (
         <AuthContextProvider>
-            <Router>
-                <Routes>
-                    {/* <Route index element={<Home />} />
-                    <Route path="/desk" element={<Desk />} /> */}
-                    <Route path="/" element={<Desk />} />
-                </Routes>
-            </Router>
+            <UserContextProvider>
+                <ProductContextProvider>
+                    <OrderContextProvider>
+                        <Router>
+                            <Routes>
+                                <Route index element={<Home />} />
+                                <Route path="/desk" element={<Desk />} />
+                                {/* <Route path="/" element={<Desk />} /> */}
+                            </Routes>
+                        </Router>
+                    </OrderContextProvider>
+                </ProductContextProvider>
+            </UserContextProvider>
         </AuthContextProvider>
     );
 }

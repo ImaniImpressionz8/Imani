@@ -2,7 +2,13 @@ import axios from 'axios';
 
 import { DOMAIN } from '.';
 
-const loginUser = async (username, password) => {
+const loginUser = async ({
+    username,
+    password
+}: {
+    username: string;
+    password: string;
+}) => {
     try {
         const { data } = await axios.get(
             `${DOMAIN}/users/login?username=${username}&password=${password}`
@@ -14,14 +20,4 @@ const loginUser = async (username, password) => {
     }
 };
 
-const fetchUsers = async () => {
-    try {
-        const { data } = await axios.get(`${DOMAIN}/users`);
-
-        return data;
-    } catch (err) {
-        throw err;
-    }
-};
-
-export { fetchUsers, loginUser };
+export { loginUser };

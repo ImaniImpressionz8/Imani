@@ -2,14 +2,17 @@ import { Box, Page, StyledText } from '../components/common';
 
 const Desk = () => {
     return (
-        <Page justifyContent={'center'} alignItems={'center'}>
-            <Box
-                justifyContent={'center'}
-                borderWidth={1}
-                flexDirection={'column'}
-            >
-                <StyledText>Desk</StyledText>
+        <Page flexDirection="column">
+            <Box flex={1}></Box>
+            <Box flex={1}>
+                <Box flex={1}>
+                    <StyledText>Desk</StyledText>
+                </Box>
+                <Box flex={1} backgroundColor="red">
+                    <StyledText>Desk</StyledText>
+                </Box>
             </Box>
+            <Box flex={1}></Box>
         </Page>
     );
 };

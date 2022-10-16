@@ -2,6 +2,7 @@ import type * as CSS from 'csstype';
 
 const Box = ({
     children,
+    flex,
     padding = 16,
     justifyContent,
     alignItems,
@@ -21,6 +22,7 @@ const Box = ({
     backgroundColor?: string;
     height?: string;
     borderWidth?: number;
+    flex?: number;
     borderColor?: string;
     borderStyle?: string;
     borderRadius?: string;
@@ -30,6 +32,7 @@ const Box = ({
         <div
             style={{
                 display: 'flex',
+                flex,
                 flexDirection,
                 padding,
                 justifyContent,

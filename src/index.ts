@@ -6,7 +6,7 @@ import express, { Express, Request, Response } from 'express';
 import helmet from 'helmet';
 
 import createMongodbConnection from './controller/db';
-import { usersRouter } from './routes';
+import { ordersRouter, productsRouter, usersRouter } from './routes';
 import logger from './util/logger';
 
 const port = 3030;
@@ -21,7 +21,10 @@ app.use(compression());
 
 createMongodbConnection().catch((err) => logger.error(err));
 
+app.use('/orders', ordersRouter);
 app.use('/users', usersRouter);
+app.use('/products', productsRouter);
+
 app.get('/api', (req, res) => {
     res.json({ user_agent: req.headers['user-agent'] });
 });
