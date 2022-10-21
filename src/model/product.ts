@@ -8,7 +8,7 @@ const ProductSchema = new mongoose.Schema(
                 priceperunit: Number,
                 unit: String,
                 sides: Number,
-                lamnination: String
+                lamination: String
             }
         ],
         department: String,

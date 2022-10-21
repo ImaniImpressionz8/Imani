@@ -1,4 +1,6 @@
 import express, { Request, Response } from 'express';
+import multer from 'multer';
+import path from 'path';
 
 import {
     deleteOrder,
@@ -8,23 +10,45 @@ import {
     updateOrder
 } from '../controller/order';
 
+const uploadDir = path.resolve('public', 'uploads');
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, uploadDir);
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e3);
+        const formatFilename = (uniqueSuffix + '_' + file.originalname).replace(
+            /\s/g,
+            ''
+        );
+        cb(null, formatFilename);
+    }
+});
+
+const upload = multer({ storage: storage });
+
 const router = express.Router();
 
 router.get('/', async (req: Request, res: Response) => {
-    const order = await getOrders();
+    const orders = await getOrders();
 
     return res.json({
         success: true,
         message: 'Orders successfully fetched',
-        data: order
+        data: orders
     });
 });
 
-router.post('/', async (req: Request, res: Response) => {
-    const { body } = req;
+router.post('/', upload.array('files'), async (req: Request, res: Response) => {
+    const { body, files } = req;
+
+    const printFiles = (files as [])?.map(
+        (item: { filename: string }) => item.filename
+    );
 
     const order = await saveOrder({
-        order: { ...body }
+        order: { ...body, printFiles }
     });
 
     return res.json({

@@ -1,15 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { Button, Input, Select } from '@chakra-ui/react';
 
 // components
-import {
-    Box,
-    StyledText,
-    Page,
-    Option,
-    Select,
-    Input
-} from '../components/common';
 
 // hooks
 import { useAuth } from '../context/AuthContext';
@@ -35,88 +28,69 @@ const Home = () => {
     }, []);
 
     return (
-        <Page justifyContent={'center'} alignItems={'center'}>
-            <img
-                style={{ width: 300, position: 'fixed', top: 50, left: 0 }}
-                alt="Imani Logo"
-                src="../../imani_logo.png"
-            />
-            <Box
-                justifyContent={'center'}
-                borderWidth={1}
-                flexDirection={'column'}
-            >
-                <StyledText margin={5}>Username</StyledText>
-                <Select
-                    width={300}
-                    height={40}
-                    padding={5}
-                    borderStyle={'solid'}
-                    borderWidth={2}
-                    borderColor={'#444444'}
-                    borderRadius={5}
-                    margin={5}
-                    onChange={(value) => {
-                        setUsername(value);
-                    }}
-                >
-                    {[
-                        {
-                            firstname: 'Select User',
-                            _id: 'Select User',
-                            username: 'Select User'
-                        },
-                        ...users
-                    ]?.map(
-                        (item: {
-                            firstname: string;
-                            _id: string;
-                            username: string;
-                        }) => {
-                            const { _id, username: user } = item;
+        <section className="h-screen w-screen flex justify-center items-center">
+            <div className="w-64 border rounded p-4 justify-center items-start">
+                <div className="">
+                    <h1 className="py-4">Username</h1>
+                    <Select
+                        placeholder="Select User"
+                        className="w-full rounded flex justify-center items-center"
+                        onChange={(event) => {
+                            setUsername(event.target.value);
+                        }}
+                        style={{
+                            fontFamily: 'Roboto Mono'
+                        }}
+                    >
+                        {users?.map(
+                            (item: {
+                                firstname: string;
+                                _id: string;
+                                username: string;
+                            }) => {
+                                const { _id, username: user } = item;
 
-                            return <Option key={_id}>{user}</Option>;
-                        }
-                    )}
-                </Select>
-                <StyledText margin={5}>Password</StyledText>
-                <Input
-                    type={'password'}
-                    width={290}
-                    height={30}
-                    padding={5}
-                    borderStyle={'solid'}
-                    borderWidth={2}
-                    borderColor={'#444444'}
-                    borderRadius={5}
-                    backgroundColor={'#f0f0f0'}
-                    margin={5}
-                    onChange={(value: string) => {
-                        setPassowrd(value);
+                                return (
+                                    <option
+                                        style={{
+                                            fontFamily: 'Roboto Mono'
+                                        }}
+                                        key={_id}
+                                    >
+                                        {user}
+                                    </option>
+                                );
+                            }
+                        )}
+                    </Select>
+                </div>
+                <div>
+                    <h1 className="py-4">Password</h1>
+                    <Input
+                        placeholder="********"
+                        className="w-full h-10 rounded p-2"
+                        type={'password'}
+                        onChange={(event) => {
+                            setPassowrd(event.target.value);
+                        }}
+                    />
+                </div>
+                <Button
+                    style={{
+                        fontFamily: 'Roboto Mono'
                     }}
-                />
-                <Input
-                    type={'button'}
-                    value={'Login'}
-                    width={303}
-                    height={40}
-                    padding={5}
-                    borderStyle={'solid'}
-                    borderWidth={2}
-                    borderColor={'#444444'}
-                    borderRadius={5}
-                    backgroundColor={'#444444'}
-                    color={'white'}
-                    margin={5}
+                    className="w-full h-60 mt-4"
+                    colorScheme="teal"
+                    size="sm"
                     onClick={() => {
-                        // login({ username, password, navigate });
+                        login({ username, password, navigate });
                         // addProductPrice({
-                        //     _id: '634b1890167bfe692ad899b5',
+                        //     _id: '634e9e3cf6901ece23ba9c54',
                         //     price: {
-                        //         priceperunit: 1,
+                        //         priceperunit: 150,
                         //         unit: 'pieces',
-                        //         sides: 2,
-                        //         lamnination: 'Vynil'
+                        //         sides: 1,
+                        //         lamination: '3D'
                         //     }
                         // });
                         // getOrders();
@@ -131,7 +105,7 @@ const Home = () => {
                         //                 priceperunit: 0.6,
                         //                 unit: 'pieces',
                         //                 sides: 1,
-                        //                 lamnination: 'Vynil'
+                        //                 lamination: 'Vynil'
                         //             }
                         //         },
                         //         qty: 1000,
@@ -143,9 +117,9 @@ const Home = () => {
                         // getProduct({ _id: '634aebde167bfe692ad899b4' });
                         // createProduct({
                         //     product: {
-                        //         name: 'Cup',
-                        //         department: 'souvenir',
-                        //         minorderqty: 6
+                        //         name: 'Flyer',
+                        //         department: 'digital',
+                        //         minorderqty: 50
                         //     }
                         // });
                         // updateOrder({
@@ -155,10 +129,11 @@ const Home = () => {
                         // getOrder({ _id: '634bc77f5101a7135874a407' });
                         // removeOrder({ _id: '634bc77f5101a7135874a407' });
                     }}
-                    cursor={'pointer'}
-                />
-            </Box>
-        </Page>
+                >
+                    Login
+                </Button>
+            </div>
+        </section>
     );
 };
 

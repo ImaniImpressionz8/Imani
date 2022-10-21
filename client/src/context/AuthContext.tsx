@@ -28,7 +28,28 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
 
             if (success) {
                 setUser(data);
-                navigate('/desk');
+
+                const { department } = data;
+
+                switch (department) {
+                    case 'front':
+                        navigate('/desk');
+                        break;
+                    case 'digital':
+                        navigate('/room/orders');
+                        break;
+                    case 'souvenir':
+                        navigate('/room/orders');
+                        break;
+                    case 'large':
+                        navigate('/room/orders');
+                        break;
+                    case 'admin':
+                        navigate('/dashboard');
+                        break;
+                    default:
+                        break;
+                }
             }
         } catch (err) {}
     };

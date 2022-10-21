@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Desk, Home } from './pages';
-import './App.css';
+import { Desk, Home, Orders, Room, Dashboard } from './pages';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import {
@@ -41,7 +40,15 @@ function App() {
                             <Routes>
                                 <Route index element={<Home />} />
                                 <Route path="/desk" element={<Desk />} />
-                                {/* <Route path="/" element={<Desk />} /> */}
+                                <Route
+                                    path="/desk/orders"
+                                    element={<Orders />}
+                                />
+                                <Route path="/room/orders" element={<Room />} />
+                                <Route
+                                    path="/dashboard"
+                                    element={<Dashboard />}
+                                />
                             </Routes>
                         </Router>
                     </OrderContextProvider>

@@ -16,7 +16,7 @@ const ProductContextProvider = ({
 }: {
     children: React.ReactNode;
 }) => {
-    const [products, setProducts] = useState();
+    const [products, setProducts] = useState([]);
 
     useEffect(() => {}, []);
 

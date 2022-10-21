@@ -27,11 +27,18 @@ const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
         } catch (err) {}
     };
 
-    const createOrder = async ({ order }: { order: object }) => {
+    const createOrder = async ({
+        order,
+        navigate
+    }: {
+        order: object;
+        navigate: any;
+    }) => {
         try {
             const { success, data, message } = await saveOrder({ order });
 
             if (success) {
+                navigate('/desk/orders');
             }
         } catch (err) {}
     };
@@ -50,6 +57,7 @@ const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
             });
 
             if (success) {
+                getOrders();
             }
         } catch (err) {}
     };
@@ -73,7 +81,6 @@ const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
             });
 
             if (success) {
-                console.log(data);
             }
         } catch (err) {}
     };
