@@ -36,7 +36,11 @@ const Orders = () => {
     }, []);
 
     useEffect(() => {
-        if (!user) navigate('/');
+        let { search } = window.location;
+        let params = new URLSearchParams(search);
+        let username = params.get('username');
+
+        if (!user && !username) navigate('/');
     }, [user, navigate]);
 
     return (
@@ -130,7 +134,14 @@ const Orders = () => {
                     </div>
                 </div>
                 <div className="border rounded flex flex-col p-4">
-                    <b>Orders</b>
+                    <b
+                        className="cursor-pointer"
+                        onClick={() => {
+                            getOrders();
+                        }}
+                    >
+                        Orders
+                    </b>
                     <div className="overflow-y-auto h-96">
                         {orders?.map(
                             (item: {

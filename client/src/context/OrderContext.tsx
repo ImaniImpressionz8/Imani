@@ -35,11 +35,13 @@ const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
         navigate: any;
     }) => {
         try {
-            const { success, data, message } = await saveOrder({ order });
+            // const { success, data, message } = await saveOrder({ order });
 
-            if (success) {
-                navigate('/desk/orders');
-            }
+            console.log(order);
+
+            // if (success) {
+            //     navigate('/desk/orders');
+            // }
         } catch (err) {}
     };
 
@@ -69,7 +71,6 @@ const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
             });
 
             if (success) {
-                console.log(data);
             }
         } catch (err) {}
     };

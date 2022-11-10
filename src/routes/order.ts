@@ -47,15 +47,15 @@ router.post('/', upload.array('files'), async (req: Request, res: Response) => {
         (item: { filename: string }) => item.filename
     );
 
-    const order = await saveOrder({
+    await saveOrder({
         order: { ...body, printFiles }
     });
 
-    return res.json({
-        success: true,
-        message: 'Order successfully saved',
-        data: order
-    });
+    const { placedBy } = body;
+
+    return res.redirect(
+        `http://localhost:3031/desk/orders?username=${placedBy}`
+    );
 });
 
 router.patch('/:_id', async (req: Request, res: Response) => {

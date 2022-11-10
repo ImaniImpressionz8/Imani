@@ -67,7 +67,12 @@ const Desk = () => {
     }, [currentProductPriceId, currentProduct]);
 
     return (
-        <section className="min-h-screen flex justify-center items-center flex-col p-4">
+        <form
+            method="post"
+            encType="multipart/form-data"
+            className="min-h-screen flex justify-center items-center flex-col p-4"
+            action="/orders/"
+        >
             <div className="flex">
                 <div className="border rounded p-4 justify-center items-start mr-4">
                     <div>
@@ -107,6 +112,8 @@ const Desk = () => {
                                         Customer Name
                                     </p>
                                     <Input
+                                        id={'clientName'}
+                                        name={'clientName'}
                                         style={{
                                             fontFamily: 'Roboto Mono'
                                         }}
@@ -121,6 +128,8 @@ const Desk = () => {
                                         Customer Phone #
                                     </p>
                                     <Input
+                                        id="phoneNumber"
+                                        name="phoneNumber"
                                         style={{
                                             fontFamily: 'Roboto Mono'
                                         }}
@@ -137,6 +146,8 @@ const Desk = () => {
                                         Customer Email
                                     </p>
                                     <Input
+                                        id="email"
+                                        name="email"
                                         style={{
                                             fontFamily: 'Roboto Mono'
                                         }}
@@ -156,6 +167,8 @@ const Desk = () => {
                                         Quantity
                                     </p>
                                     <Input
+                                        id={'qty'}
+                                        name={'qty'}
                                         style={{
                                             fontFamily: 'Roboto Mono'
                                         }}
@@ -299,6 +312,28 @@ const Desk = () => {
                         <p>VAT</p>
                         <b className="text-lg mt-2">{'-'}</b>
                     </div>
+                    <input
+                        id={'placedBy'}
+                        name={'placedBy'}
+                        type={'hidden'}
+                        value={user?.username}
+                    />
+                    <input
+                        id={'department'}
+                        name={'department'}
+                        type={'hidden'}
+                        value={currentProduct?.department || ''}
+                    />
+                    <input
+                        id={'totalcost'}
+                        name={'totalcost'}
+                        type={'hidden'}
+                        value={
+                            currentProductPrice?.priceperunit
+                                ? currentProductPrice?.priceperunit * orderQTY
+                                : -1
+                        }
+                    />
                     <div className="pb-4">
                         <p>Total Cost</p>
                         <b className="text-lg mt-2">
@@ -313,6 +348,8 @@ const Desk = () => {
                         </b>
                     </div>
                     <Input
+                        id="files"
+                        name="files"
                         style={{
                             fontFamily: 'Roboto Mono'
                         }}
@@ -344,31 +381,10 @@ const Desk = () => {
                     style={{
                         fontFamily: 'Roboto Mono'
                     }}
+                    type="submit"
                     className="w-64 h-60 m-2"
                     colorScheme="teal"
                     size="sm"
-                    onClick={() => {
-                        createOrder({
-                            order: {
-                                clientName: customerName,
-                                department: currentProduct?.department,
-                                email: customerEmail,
-                                totalcost: currentProductPrice?.priceperunit
-                                    ? currentProductPrice?.priceperunit *
-                                      orderQTY
-                                    : -1,
-                                phoneNumber: customerPhoneNumber,
-                                qty: orderQTY,
-                                product: {
-                                    ...currentProductPrice,
-                                    name: currentProduct?.name
-                                },
-                                files: workFiles,
-                                placedBy: user?.username
-                            },
-                            navigate
-                        });
-                    }}
                 >
                     Submit
                 </Button>
@@ -386,7 +402,7 @@ const Desk = () => {
                     Orders
                 </Button>
             </div>
-        </section>
+        </form>
     );
 };
 

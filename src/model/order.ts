@@ -11,8 +11,10 @@ const OrderSchema = new mongoose.Schema(
         email: String,
         phoneNumber: String,
         state: { type: String, default: 'placed' },
-        printFiles: [],
-        placedBy: { type: String, required: true }
+        printFiles: { type: Array, required: true },
+        placedBy: { type: String, required: true },
+        authorizedBy: { type: String },
+        completedBy: { type: String }
     },
     { timestamps: true }
 );

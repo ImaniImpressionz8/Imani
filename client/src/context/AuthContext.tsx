@@ -9,7 +9,15 @@ export const useAuth = () => useContext(AuthContext);
 const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = useState<any>(null);
 
-    useEffect(() => {}, []);
+    useEffect(() => {
+        const user = localStorage.getItem('user');
+
+        let parsedUser = null;
+
+        if (user) parsedUser = JSON.parse(user);
+
+        if (user && parsedUser) setUser(parsedUser);
+    }, []);
 
     const login = async ({
         username,
@@ -28,6 +36,8 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
 
             if (success) {
                 setUser(data);
+
+                localStorage.setItem('user', JSON.stringify(data));
 
                 const { department } = data;
 

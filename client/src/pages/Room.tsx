@@ -30,7 +30,8 @@ const Room = () => {
         totalcost: number;
         email: string;
         state: string;
-    }>();
+        printFiles: [];
+    } | null>();
 
     const [departmentWorks, setDepartmentWorks] = useState<[]>();
 
@@ -42,18 +43,34 @@ const Room = () => {
         if (!user) {
             navigate('/');
         } else {
-            const work = orders.filter(
-                (item: { department: string }) =>
-                    item?.department === user?.department
+            const work = orders?.filter(
+                (item: { department: string; state: string }) =>
+                    item?.department === user?.department &&
+                    item.state !== 'completed'
             );
 
             setDepartmentWorks(work);
         }
-    }, [user, navigate]);
+    }, [user, navigate, orders]);
 
     return (
         <section className="min-h-screen flex justify-center items-center flex-col p-4">
             <div className="flex w-auto">
+                <div className="border rounded p-4 justify-center items-start mr-4">
+                    {currentOrder?.printFiles?.map((item: string) => (
+                        <a
+                            rel="noreferrer"
+                            target={'_blank'}
+                            href={`http://localhost:3030/uploads/${item}`}
+                        >
+                            <div className="bg-slate-100 p-1 m-1">
+                                <p className="text-sm text-slate-500 m-2">
+                                    {item?.split('_')[1]}
+                                </p>
+                            </div>
+                        </a>
+                    ))}
+                </div>
                 <div className="border rounded p-4 justify-center items-start mr-4">
                     <div>
                         <b>
@@ -141,7 +158,16 @@ const Room = () => {
                     </div>
                 </div>
                 <div className="border rounded flex flex-col p-4">
-                    <b>Orders</b>
+                    <b
+                        className="cursor-pointer"
+                        onClick={() => {
+                            getOrders();
+                            setCurrentOrder(null);
+                        }}
+                    >
+                        Orders
+                    </b>
+
                     <div className="overflow-y-auto h-96">
                         {departmentWorks?.map(
                             (item: {
@@ -160,6 +186,7 @@ const Room = () => {
                                 email: string;
                                 sides: number;
                                 state: string;
+                                printFiles: [];
                             }) => {
                                 const {
                                     clientName,
@@ -259,7 +286,8 @@ const Room = () => {
                     onClick={() => {
                         updateOrder({
                             _id: currentOrder?._id,
-                            order: { state: 'completed' }
+                            order: { state: 'completed' },
+                            completedBy: user?.username
                         });
                     }}
                 >
