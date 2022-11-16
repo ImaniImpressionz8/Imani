@@ -14,6 +14,16 @@ const fetchProducts = async () => {
     }
 };
 
+const fetchDepartments = async () => {
+    try {
+        const { data } = await axios.get(`${route}/departments`);
+
+        return data;
+    } catch (err) {
+        throw err;
+    }
+};
+
 const saveProduct = async ({ product }: { product: object }) => {
     try {
         const { data } = await axios.post(`${route}/`, { ...product });
@@ -67,5 +77,6 @@ export {
     saveProduct,
     postProductPrice,
     fetchProduct,
-    deleteProduct
+    deleteProduct,
+    fetchDepartments
 };

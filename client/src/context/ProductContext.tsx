@@ -4,7 +4,9 @@ import {
     fetchProducts,
     saveProduct,
     postProductPrice,
-    fetchProduct
+    fetchProduct,
+    deleteProduct,
+    fetchDepartments
 } from '../services/product';
 
 const ProductContext = createContext<any>({});
@@ -17,10 +19,13 @@ const ProductContextProvider = ({
     children: React.ReactNode;
 }) => {
     const [products, setProducts] = useState([]);
+    const [departments, setDepartments] = useState([]);
+    const [showProducts, setShowProducts] = useState(false);
+    const [edit, setEdit] = useState<boolean>(false);
 
     useEffect(() => {}, []);
 
-    const getProudcts = async () => {
+    const getProducts = async () => {
         try {
             const { success, data, message } = await fetchProducts();
 
@@ -30,11 +35,22 @@ const ProductContextProvider = ({
         } catch (err) {}
     };
 
+    const getDepartments = async () => {
+        try {
+            const { success, data, message } = await fetchDepartments();
+
+            if (success) {
+                setDepartments(data);
+            }
+        } catch (err) {}
+    };
     const createProduct = async ({ product }: { product: object }) => {
         try {
             const { success, data, message } = await saveProduct({ product });
 
             if (success) {
+                getProducts();
+                setShowProducts(true);
             }
         } catch (err) {}
     };
@@ -53,6 +69,20 @@ const ProductContextProvider = ({
             });
 
             if (success) {
+                setEdit(false);
+                getProducts();
+            }
+        } catch (err) {}
+    };
+
+    const removeProduct = async ({ _id }: { _id: string; price: object }) => {
+        try {
+            const { success, data, message } = await deleteProduct({
+                _id
+            });
+
+            if (success) {
+                getProducts();
             }
         } catch (err) {}
     };
@@ -69,11 +99,18 @@ const ProductContextProvider = ({
     return (
         <ProductContext.Provider
             value={{
-                getProudcts,
+                getProducts,
                 products,
                 createProduct,
                 addProductPrice,
-                getProduct
+                getProduct,
+                removeProduct,
+                showProducts,
+                setShowProducts,
+                departments,
+                getDepartments,
+                edit,
+                setEdit
             }}
         >
             {children}

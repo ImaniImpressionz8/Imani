@@ -84,50 +84,6 @@ const Home = () => {
                     size="sm"
                     onClick={() => {
                         login({ username, password, navigate });
-                        // addProductPrice({
-                        //     _id: '634e9e3cf6901ece23ba9c54',
-                        //     price: {
-                        //         priceperunit: 150,
-                        //         unit: 'pieces',
-                        //         sides: 1,
-                        //         lamination: '3D'
-                        //     }
-                        // });
-                        // getOrders();
-                        // createOrder({
-                        //     order: {
-                        //         clientName: 'Nakama',
-                        //         totalcost: 60000,
-                        //         department: 'digital',
-                        //         product: {
-                        //             name: 'Flyer',
-                        //             price: {
-                        //                 priceperunit: 0.6,
-                        //                 unit: 'pieces',
-                        //                 sides: 1,
-                        //                 lamination: 'Vynil'
-                        //             }
-                        //         },
-                        //         qty: 1000,
-                        //         email: 'mail@nakamaltd.com',
-                        //         phoneNumber: '2335050030073',
-                        //         state: 'placed'
-                        //     }
-                        // });
-                        // getProduct({ _id: '634aebde167bfe692ad899b4' });
-                        // createProduct({
-                        //     product: {
-                        //         name: 'Flyer',
-                        //         department: 'digital',
-                        //         minorderqty: 50
-                        //     }
-                        // });
-                        // updateOrder({
-                        //     _id: '634bc77f5101a7135874a407',
-                        //     order: { state: 'completed' }
-                        // });
-                        // getOrder({ _id: '634bc77f5101a7135874a407' });
-                        // removeOrder({ _id: '634bc77f5101a7135874a407' });
                     }}
                 >
                     Login

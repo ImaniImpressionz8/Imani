@@ -1,8 +1,16 @@
+import Department from '../model/department';
 import Product from '../model/product';
 
 const getProducts = async () =>
     await Product.find()
         .then((products) => products)
+        .catch((err) => {
+            throw err;
+        });
+
+const getDepartments = async () =>
+    await Department.find()
+        .then((department) => department)
         .catch((err) => {
             throw err;
         });
@@ -60,6 +68,7 @@ const deleteProductPrice = ({
 export {
     deleteProduct,
     deleteProductPrice,
+    getDepartments,
     getProduct,
     getProducts,
     saveProduct,

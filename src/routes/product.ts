@@ -3,6 +3,7 @@ import express, { Request, Response } from 'express';
 import {
     deleteProduct,
     deleteProductPrice,
+    getDepartments,
     getProduct,
     getProducts,
     saveProduct,
@@ -18,6 +19,16 @@ router.get('/', async (req: Request, res: Response) => {
         success: true,
         message: 'Products successfully fetched',
         data: products
+    });
+});
+
+router.get('/departments', async (req: Request, res: Response) => {
+    const departments = await getDepartments();
+
+    return res.json({
+        success: true,
+        message: 'Departments successfully fetched',
+        data: departments
     });
 });
 

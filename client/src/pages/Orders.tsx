@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Button } from '@chakra-ui/react';
+import { format } from 'date-fns';
 
 // hooks
 import { useOrder } from '../context/OrderContext';
@@ -29,6 +30,7 @@ const Orders = () => {
         totalcost: number;
         email: string;
         state: string;
+        createdAt: Date;
     }>();
 
     useEffect(() => {
@@ -49,15 +51,15 @@ const Orders = () => {
                 <div className="border rounded p-4 justify-center items-start mr-4">
                     <div>
                         <b>
-                            {' '}
                             {currentOrder?.product?.name
                                 ? currentOrder?.product?.name
                                 : '-'}
                         </b>
                         <div className="flex flex-col">
                             <p className="mt-4">Custmer Details</p>
-                            <div className="flex">
-                                <div className="mt-4 flex flex-1 flex-col">
+
+                            <div className="flex  flex-1">
+                                <div className="mt-4 flex  flex-1 flex-col">
                                     <p className="text-sm text-slate-500 mb-2">
                                         Customer Name
                                     </p>
@@ -67,7 +69,7 @@ const Orders = () => {
                                             : '-'}
                                     </h3>
                                 </div>
-                                <div className="mt-4 ml-8">
+                                <div className="mt-4 flex  flex-1 flex-col">
                                     <p className="text-sm text-slate-500 mb-2">
                                         Customer Phone #
                                     </p>
@@ -78,14 +80,29 @@ const Orders = () => {
                                     </h3>
                                 </div>
                             </div>
-                            <div className="flex">
-                                <div className="mt-4">
+                            <div className="flex  flex-1">
+                                <div className="mt-4 flex  flex-1 flex-col">
                                     <p className="text-sm text-slate-500 mb-2">
                                         Customer Email
                                     </p>
                                     <h3>
                                         {currentOrder?.email
                                             ? currentOrder?.email
+                                            : '-'}
+                                    </h3>
+                                </div>
+                                <div className="mt-4 flex  flex-1 flex-col">
+                                    <p className="text-sm text-slate-500 mb-2">
+                                        Order Time
+                                    </p>
+                                    <h3>
+                                        {currentOrder?.createdAt
+                                            ? format(
+                                                  new Date(
+                                                      currentOrder?.createdAt.toString()
+                                                  ),
+                                                  'dd MMM yyy, HH:mm:ss'
+                                              )
                                             : '-'}
                                     </h3>
                                 </div>
@@ -160,6 +177,7 @@ const Orders = () => {
                                 email: string;
                                 sides: number;
                                 state: string;
+                                createdAt: Date;
                             }) => {
                                 const {
                                     clientName,
@@ -177,6 +195,8 @@ const Orders = () => {
                                     <div
                                         className="flex mt-4 border p-2 cursor-pointer"
                                         onClick={() => {
+                                            console.log(item.createdAt);
+
                                             setCurrentOrder(item);
                                         }}
                                         key={_id}

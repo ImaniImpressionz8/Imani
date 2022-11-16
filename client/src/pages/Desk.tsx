@@ -10,7 +10,7 @@ import { useAuth } from '../context/AuthContext';
 const Desk = () => {
     const navigate = useNavigate();
 
-    const { getProudcts, products } = useProduct();
+    const { getProducts, products } = useProduct();
     const { user } = useAuth();
     const { getOrders, createOrder, updateOrder, getOrder, removeOrder } =
         useOrder();
@@ -42,7 +42,7 @@ const Desk = () => {
     const [customerEmail, setCustomerEmail] = useState<string>();
 
     useEffect(() => {
-        getProudcts();
+        getProducts();
     }, []);
 
     useEffect(() => {
