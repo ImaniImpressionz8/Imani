@@ -9,6 +9,8 @@ export const useUser = () => useContext(UserContext);
 const UserContextProvider = ({ children }: { children: React.ReactNode }) => {
     const [users, setUsers] = useState<Array<{}>>([]);
 
+    const [showUsers, setShowUsers] = useState(false);
+
     useEffect(() => {}, []);
 
     const getUsers = async () => {
@@ -19,23 +21,28 @@ const UserContextProvider = ({ children }: { children: React.ReactNode }) => {
         } catch (err) {}
     };
 
-    const saveUsers = async ({
+    const saveUser = async ({
         firstname,
         username,
         department,
-        password
+        password,
+        isAdmin
     }: {
         firstname: string;
         username: string;
         department: string;
         password: string;
+        isAdmin: boolean;
     }) => {
         try {
             const { success, data, message } = await postUser({
-                user: { firstname, username, department, password }
+                user: { firstname, username, department, password, isAdmin }
             });
 
-            if (success) setUsers([...users, data]);
+            if (success) {
+                getUsers();
+                setShowUsers(true);
+            }
         } catch (err) {}
     };
 
@@ -44,6 +51,7 @@ const UserContextProvider = ({ children }: { children: React.ReactNode }) => {
             const { success, data, message } = await removeUser({ _id });
 
             if (success) {
+                getUsers();
             }
         } catch (err) {}
     };
@@ -58,7 +66,15 @@ const UserContextProvider = ({ children }: { children: React.ReactNode }) => {
 
     return (
         <UserContext.Provider
-            value={{ getUsers, users, saveUsers, deleteUser, getUser }}
+            value={{
+                getUsers,
+                users,
+                saveUser,
+                deleteUser,
+                getUser,
+                showUsers,
+                setShowUsers
+            }}
         >
             {children}
         </UserContext.Provider>

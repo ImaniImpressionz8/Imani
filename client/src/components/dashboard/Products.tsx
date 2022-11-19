@@ -21,6 +21,7 @@ const Products = () => {
 
     const [productName, setProductName] = useState<String>();
     const [productDepartment, setProductDepartment] = useState<String>();
+    const [lamination, setLamination] = useState<String>();
     const [minorderqty, setMinorderqty] = useState<Number>();
 
     const [unitPrice, setUnitPrice] = useState<Number>();
@@ -48,7 +49,7 @@ const Products = () => {
                         <div className="mb-4  flex">
                             <div className="mx-4">
                                 <p className="mb-1 text-sm text-slate-500">
-                                    Unit Product
+                                    Unit Price (GHS)
                                 </p>
                                 <Input
                                     id={'unitprice'}
@@ -58,8 +59,8 @@ const Products = () => {
                                         backgroundColor: 'white'
                                     }}
                                     className="w-64 h-10 rounded p-2 mt-1"
-                                    onChange={(event) => {
-                                        const { value } = event.target;
+                                    onChange={({ target }) => {
+                                        const { value } = target;
 
                                         setUnitPrice(parseFloat(value) * 100);
                                     }}
@@ -77,8 +78,8 @@ const Products = () => {
                                         backgroundColor: 'white'
                                     }}
                                     className="w-64 h-10 rounded p-2  mt-1"
-                                    onChange={(event) => {
-                                        const { value } = event.target;
+                                    onChange={({ target }) => {
+                                        const { value } = target;
 
                                         setUnit(value);
                                     }}
@@ -98,10 +99,29 @@ const Products = () => {
                                         backgroundColor: 'white'
                                     }}
                                     className="w-64 h-10 rounded p-2 mt-1"
-                                    onChange={(event) => {
-                                        const { value } = event.target;
+                                    onChange={({ target }) => {
+                                        const { value } = target;
 
                                         setSides(parseInt(value));
+                                    }}
+                                />
+                            </div>
+                            <div className="mx-4">
+                                <p className="mb-1 text-sm text-slate-500">
+                                    Lamination
+                                </p>
+                                <Input
+                                    id={'unitprice'}
+                                    name={'unitprice'}
+                                    style={{
+                                        fontFamily: 'Roboto Mono',
+                                        backgroundColor: 'white'
+                                    }}
+                                    className="w-64 h-10 rounded p-2 mt-1"
+                                    onChange={({ target }) => {
+                                        const { value } = target;
+
+                                        setLamination(value);
                                     }}
                                 />
                             </div>
@@ -114,33 +134,61 @@ const Products = () => {
                             className="h-60 mr-2 my-2"
                             size="sm"
                             onClick={() => {
+                                if (!unitPrice) return;
+
                                 addProductPrice({
                                     _id: currentProduct?._id,
                                     price: {
                                         priceperunit: unitPrice,
                                         unit,
-                                        sides
+                                        sides,
+                                        lamination
                                     }
                                 });
+
+                                setSides(undefined);
+                                setUnit(undefined);
+                                setUnitPrice(undefined);
+                                setLamination(undefined);
                             }}
                         >
                             Save Price
+                        </Button>
+                        <Button
+                            style={{
+                                fontFamily: 'Roboto Mono'
+                            }}
+                            colorScheme="teal"
+                            className="h-60 mr-2 my-2"
+                            size="sm"
+                            onClick={() => {
+                                setEdit(false);
+                            }}
+                        >
+                            Cancel
                         </Button>
                     </div>
                 </div>
             )}
             {showProducts ? (
                 <div className="flex">
-                    <div className="border p-4">
+                    <div className="border p-4 overflow-y-auto h-96">
                         <h3 className="mb-4">Product Price List</h3>
                         {currentProduct?.prices?.map(
                             (item: {
                                 priceperunit: Number;
                                 sides: Number;
                                 unit: String;
+                                lamination: String;
                                 _id: string;
                             }) => {
-                                const { _id, priceperunit, unit, sides } = item;
+                                const {
+                                    _id,
+                                    priceperunit,
+                                    unit,
+                                    sides,
+                                    lamination
+                                } = item;
                                 return (
                                     <div
                                         key={_id}
@@ -149,7 +197,7 @@ const Products = () => {
                                         <div className="flex flex-col">
                                             <div className="flex flex-col flex-1  mx-4">
                                                 <p className="mb-1 text-sm text-slate-500">
-                                                    Unit Product
+                                                    Unit Price
                                                 </p>
                                                 <p className="mb-1">
                                                     {`GHS ${(
@@ -174,6 +222,14 @@ const Products = () => {
                                                     Unit
                                                 </p>
                                                 <p className="mb-1">{unit}</p>
+                                            </div>
+                                            <div className="flex flex-col flex-1 mx-4">
+                                                <p className="mb-1 text-sm text-slate-500">
+                                                    Lamination
+                                                </p>
+                                                <p className="mb-1">
+                                                    {lamination}
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -317,10 +373,10 @@ const Products = () => {
                                         fontFamily: 'Roboto Mono'
                                     }}
                                     className="w-64 h-10 rounded p-2"
-                                    onChange={(event) => {
-                                        const name = event.target.value;
+                                    onChange={({ target }) => {
+                                        const { value } = target;
 
-                                        setProductName(name);
+                                        setProductName(value);
                                     }}
                                 />
                             </div>
@@ -333,8 +389,8 @@ const Products = () => {
                                         fontFamily: 'Roboto Mono'
                                     }}
                                     className="w-64 h-10 rounded p-2"
-                                    onChange={(event) => {
-                                        const { value } = event.target;
+                                    onChange={({ target }) => {
+                                        const { value } = target;
 
                                         setProductDepartment(value);
                                     }}
@@ -366,9 +422,10 @@ const Products = () => {
                                         fontFamily: 'Roboto Mono'
                                     }}
                                     className="w-64 h-10 rounded p-2"
-                                    onChange={(event) => {
-                                        const moq = event.target.value;
-                                        setMinorderqty(parseInt(moq));
+                                    onChange={({ target }) => {
+                                        const { value } = target;
+
+                                        setMinorderqty(parseInt(value));
                                     }}
                                 />
                             </div>

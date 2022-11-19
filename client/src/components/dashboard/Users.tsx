@@ -5,9 +5,14 @@ import { useEffect, useState } from 'react';
 import { useUser } from '../../context/UserContext';
 
 const Users = () => {
-    const { getUsers, users } = useUser();
+    const { getUsers, users, deleteUser, saveUser, showUsers, setShowUsers } =
+        useUser();
 
-    const [showUsers, setShowUsers] = useState(false);
+    const [firstname, setFirstname] = useState<String>();
+    const [username, setUsername] = useState<String>();
+    const [password, setPassword] = useState<String>();
+    const [department, setDepartment] = useState<String>();
+    const [isAdmin, setIsAdmin] = useState<boolean>();
 
     const [currentUser, setCurrentUser] = useState<{
         firstname: string;
@@ -74,19 +79,13 @@ const Users = () => {
                                 }}
                                 className="h-60 mr-2 my-2"
                                 size="sm"
-                                onClick={() => {}}
+                                onClick={() => {
+                                    const { _id } = currentUser || {};
+
+                                    deleteUser({ _id });
+                                }}
                             >
                                 Delete
-                            </Button>
-                            <Button
-                                style={{
-                                    fontFamily: 'Roboto Mono'
-                                }}
-                                className="h-60 mr-2 my-2"
-                                size="sm"
-                                onClick={() => {}}
-                            >
-                                Edit
                             </Button>
                         </div>
                     </div>
@@ -168,13 +167,17 @@ const Users = () => {
                             <div className="m-1">
                                 <p className="mb-1">Firstname</p>
                                 <Input
-                                    id={'username'}
-                                    name={'username'}
+                                    id={'firstname'}
+                                    name={'firstname'}
                                     style={{
                                         fontFamily: 'Roboto Mono'
                                     }}
                                     className="w-64 h-10 rounded p-2"
-                                    onChange={(event) => {}}
+                                    onChange={({ target }) => {
+                                        const { value } = target;
+
+                                        setFirstname(value);
+                                    }}
                                 />
                             </div>
                             <div className="m-1">
@@ -186,7 +189,11 @@ const Users = () => {
                                         fontFamily: 'Roboto Mono'
                                     }}
                                     className="w-64 h-10 rounded p-2"
-                                    onChange={(event) => {}}
+                                    onChange={({ target }) => {
+                                        const { value } = target;
+
+                                        setUsername(value);
+                                    }}
                                 />
                             </div>
                         </div>
@@ -194,13 +201,17 @@ const Users = () => {
                             <div className="m-1">
                                 <p className="mb-1">Department</p>
                                 <Input
-                                    id={'clientName'}
-                                    name={'clientName'}
+                                    id={'department'}
+                                    name={'department'}
                                     style={{
                                         fontFamily: 'Roboto Mono'
                                     }}
                                     className="w-64 h-10 rounded p-2"
-                                    onChange={(event) => {}}
+                                    onChange={({ target }) => {
+                                        const { value } = target;
+
+                                        setDepartment(value);
+                                    }}
                                 />
                             </div>
                             <div className="m-1">
@@ -212,7 +223,11 @@ const Users = () => {
                                         fontFamily: 'Roboto Mono'
                                     }}
                                     className="w-64 h-10 rounded p-2"
-                                    onChange={(event) => {}}
+                                    onChange={({ target }) => {
+                                        const { value } = target;
+
+                                        setPassword(value);
+                                    }}
                                 />
                             </div>
                         </div>
@@ -226,11 +241,50 @@ const Users = () => {
                                         fontFamily: 'Roboto Mono'
                                     }}
                                     className="w-64 h-10 rounded p-2"
-                                    onChange={(event) => {}}
+                                    onChange={({ target }) => {
+                                        const { value } = target;
+
+                                        setIsAdmin(Boolean(parseInt(value)));
+                                    }}
                                 >
                                     <option value={0}>False</option>
                                     <option value={1}>True</option>
                                 </Select>
+                            </div>
+                            <div className="m-1">
+                                <p className="mb-1">Action</p>
+                                <Button
+                                    style={{
+                                        fontFamily: 'Roboto Mono'
+                                    }}
+                                    className="w-64 h-60 p-2"
+                                    size="sm"
+                                    onClick={() => {
+                                        if (
+                                            !firstname ||
+                                            !username ||
+                                            !department ||
+                                            !password
+                                        )
+                                            return;
+
+                                        saveUser({
+                                            firstname,
+                                            username,
+                                            department,
+                                            password,
+                                            isAdmin
+                                        });
+
+                                        setFirstname(undefined);
+                                        setUsername(undefined);
+                                        setPassword(undefined);
+                                        setDepartment(undefined);
+                                        setIsAdmin(undefined);
+                                    }}
+                                >
+                                    Save user
+                                </Button>
                             </div>
                         </div>
                     </div>

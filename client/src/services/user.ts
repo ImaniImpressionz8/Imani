@@ -30,6 +30,7 @@ const postUser = async ({
         username: string;
         department: string;
         password: string;
+        isAdmin: boolean;
     };
 }) => {
     try {
