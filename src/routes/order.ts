@@ -47,11 +47,13 @@ router.post('/', upload.array('files'), async (req: Request, res: Response) => {
         (item: { filename: string }) => item.filename
     );
 
-    await saveOrder({
-        order: { ...body, printFiles }
-    });
+    const { lamination, name, placedBy, priceperunit, sides, unit } = body;
 
-    const { placedBy } = body;
+    const product = { name, priceperunit, sides, lamination, unit };
+
+    await saveOrder({
+        order: { ...body, printFiles, product }
+    });
 
     return res.redirect(
         `http://localhost:3031/desk/orders?username=${placedBy}`

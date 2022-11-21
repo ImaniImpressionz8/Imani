@@ -4,7 +4,6 @@ import { Button, Input, Select } from '@chakra-ui/react';
 
 // hooks
 import { useProduct } from '../context/ProductContext';
-import { useOrder } from '../context/OrderContext';
 import { useAuth } from '../context/AuthContext';
 
 const Desk = () => {
@@ -12,10 +11,6 @@ const Desk = () => {
 
     const { getProducts, products } = useProduct();
     const { user } = useAuth();
-    const { getOrders, createOrder, updateOrder, getOrder, removeOrder } =
-        useOrder();
-
-    const [workFiles, setWorkFiles] = useState<(File | null | undefined)[]>();
 
     const [currentProductId, setCurrentProductId] = useState('');
     const [currentProduct, setCurrentProduct] = useState<{
@@ -36,10 +31,6 @@ const Desk = () => {
     const [orderQTY, setOrderQTY] = useState<number>(
         currentProduct ? currentProduct?.minorderqty : 1
     );
-
-    const [customerName, setCustomerName] = useState<string>();
-    const [customerPhoneNumber, setCustomerPhoneNumber] = useState<string>();
-    const [customerEmail, setCustomerEmail] = useState<string>();
 
     useEffect(() => {
         getProducts();
@@ -118,9 +109,7 @@ const Desk = () => {
                                             fontFamily: 'Roboto Mono'
                                         }}
                                         className="w-64 h-10 rounded p-2"
-                                        onChange={(event) => {
-                                            setCustomerName(event.target.value);
-                                        }}
+                                        onChange={(event) => {}}
                                     />
                                 </div>
                                 <div className="mt-4">
@@ -134,11 +123,7 @@ const Desk = () => {
                                             fontFamily: 'Roboto Mono'
                                         }}
                                         className="w-64 h-10 rounded p-2"
-                                        onChange={(event) => {
-                                            setCustomerPhoneNumber(
-                                                event.target.value
-                                            );
-                                        }}
+                                        onChange={(event) => {}}
                                     />
                                 </div>
                                 <div className="mt-4">
@@ -152,11 +137,7 @@ const Desk = () => {
                                             fontFamily: 'Roboto Mono'
                                         }}
                                         className="w-64 h-10 rounded p-2"
-                                        onChange={(event) => {
-                                            setCustomerEmail(
-                                                event.target.value
-                                            );
-                                        }}
+                                        onChange={(event) => {}}
                                     />
                                 </div>
                             </div>
@@ -172,11 +153,12 @@ const Desk = () => {
                                         style={{
                                             fontFamily: 'Roboto Mono'
                                         }}
+                                        type="number"
                                         className="w-64 h-10 rounded p-2"
-                                        onChange={(event) => {
-                                            setOrderQTY(
-                                                parseInt(event.target.value, 10)
-                                            );
+                                        onChange={({ target }) => {
+                                            const { value } = target;
+
+                                            setOrderQTY(parseInt(value, 10));
                                         }}
                                     />
                                 </div>
@@ -325,6 +307,36 @@ const Desk = () => {
                         value={currentProduct?.department || ''}
                     />
                     <input
+                        id={'unit'}
+                        name={'unit'}
+                        type={'hidden'}
+                        value={currentProductPrice?.unit}
+                    />
+                    <input
+                        id={'priceperunit'}
+                        name={'priceperunit'}
+                        type={'hidden'}
+                        value={currentProductPrice?.priceperunit}
+                    />
+                    <input
+                        id={'sides'}
+                        name={'sides'}
+                        type={'hidden'}
+                        value={currentProductPrice?.sides}
+                    />
+                    <input
+                        id={'lamination'}
+                        name={'lamination'}
+                        type={'hidden'}
+                        value={currentProductPrice?.lamination}
+                    />
+                    <input
+                        id={'name'}
+                        name={'name'}
+                        type={'hidden'}
+                        value={currentProduct?.name}
+                    />
+                    <input
                         id={'totalcost'}
                         name={'totalcost'}
                         type={'hidden'}
@@ -358,21 +370,7 @@ const Desk = () => {
                         size="sm"
                         type={'file'}
                         multiple
-                        onChange={(event) => {
-                            const { files } = event.target;
-
-                            let make = [];
-
-                            for (
-                                let i = 0;
-                                i < (files?.length ? files?.length : 0);
-                                i++
-                            ) {
-                                make[i] = files?.item(i);
-                            }
-
-                            setWorkFiles(make);
-                        }}
+                        onChange={(event) => {}}
                     />
                 </div>
             </div>

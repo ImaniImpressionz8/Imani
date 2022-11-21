@@ -1,41 +1,28 @@
-import { Button } from '@chakra-ui/react';
-import { useState } from 'react';
-import { Products, Users } from '../components/dashboard';
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Nav, Products, Users } from '../components/dashboard';
+
+// hooks
+import { useAuth } from '../context/AuthContext';
+import Orders from '../components/dashboard/Orders';
 
 const Dashboard = () => {
-    const [tab, setTab] = useState('users');
+    const navigate = useNavigate();
+
+    const { user } = useAuth();
+
+    const [tab, setTab] = useState('products');
+
+    useEffect(() => {
+        if (!user) navigate('/');
+    }, [user, navigate]);
 
     return (
-        <div className="flex flex-col min-h-screen items-center justify-center">
-            <div className="flex p-1">
-                <Button
-                    style={{
-                        fontFamily: 'Roboto Mono'
-                    }}
-                    className="w-64 h-60 m-2"
-                    colorScheme="teal"
-                    size="sm"
-                    onClick={() => {
-                        setTab('users');
-                    }}
-                >
-                    Users
-                </Button>
-                <Button
-                    style={{
-                        fontFamily: 'Roboto Mono'
-                    }}
-                    className="w-64 h-60 m-2"
-                    colorScheme="teal"
-                    size="sm"
-                    onClick={() => {
-                        setTab('products');
-                    }}
-                >
-                    Products
-                </Button>
-            </div>
-            {tab === 'users' ? <Users /> : <Products />}
+        <div className="h-screen bg-white flex">
+            <Nav setView={setTab} />
+            {tab === 'products' && <Products />}
+            {tab === 'users' && <Users />}
+            {tab === 'orders' && <Orders />}
         </div>
     );
 };

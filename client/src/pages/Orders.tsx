@@ -23,7 +23,12 @@ const Orders = () => {
     const [currentOrder, setCurrentOrder] = useState<{
         clientName: string;
         department: string;
-        product: { name: string; sides: string; lamination: string };
+        product: {
+            name: string;
+            sides: string;
+            lamination: string;
+            unit: string;
+        };
         orderNumber: string;
         phoneNumber: string;
         _id: string;
@@ -132,10 +137,10 @@ const Orders = () => {
                         </div>
                         <div className="flex flex-1 flex-col">
                             <div className="flex flex-1 flex-col">
-                                <p className="text-sm text-slate-500">Sides</p>
+                                <p className="text-sm text-slate-500">Unit</p>
                                 <h3>
-                                    {currentOrder?.product?.sides
-                                        ? currentOrder?.product?.sides
+                                    {currentOrder?.product?.unit
+                                        ? currentOrder?.product?.unit
                                         : '-'}
                                 </h3>
                             </div>
@@ -168,6 +173,7 @@ const Orders = () => {
                                     name: string;
                                     sides: string;
                                     lamination: string;
+                                    unit: string;
                                 };
                                 orderNumber: string;
                                 phoneNumber: string;
