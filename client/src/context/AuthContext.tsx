@@ -48,7 +48,7 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
                     case 'digital':
                         navigate('/room/orders');
                         break;
-                    case 'souvenir':
+                    case 'souvenirs':
                         navigate('/room/orders');
                         break;
                     case 'large':

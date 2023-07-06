@@ -164,7 +164,7 @@ const Desk = () => {
                                 </div>
                                 <div className="mt-4">
                                     <p className="text-sm text-slate-500 mb-2">
-                                        Price/Sides/Lamination
+                                        Price/Sides/Lamination/Colour
                                     </p>
                                     <Select
                                         placeholder="Select Price/Unit"

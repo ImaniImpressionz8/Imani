@@ -7,16 +7,10 @@ import { Button, Input, Select } from '@chakra-ui/react';
 // hooks
 import { useAuth } from '../context/AuthContext';
 import { useUser } from '../context/UserContext';
-import { useProduct } from '../context/ProductContext';
-import { useOrder } from '../context/OrderContext';
 
 const Home = () => {
     const { login } = useAuth();
     const { getUsers, users } = useUser();
-    const { getProudcts, addProductPrice, createProduct, getProduct } =
-        useProduct();
-    const { getOrders, createOrder, updateOrder, getOrder, removeOrder } =
-        useOrder();
 
     const [password, setPassowrd] = useState<string>();
     const [username, setUsername] = useState<string>();

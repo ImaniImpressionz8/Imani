@@ -223,7 +223,6 @@ const NewProductForm = ({
 }) => {
     const [productName, setProductName] = useState<String>();
     const [productDepartment, setProductDepartment] = useState<String>();
-    const [lamination, setLamination] = useState<String>();
     const [minorderqty, setMinorderqty] = useState<Number>();
 
     return (
@@ -262,11 +261,16 @@ const NewProductForm = ({
                             }}
                         >
                             {departments?.map(
-                                (item: { value: string; name: string }) => {
+                                (
+                                    item: { value: string; name: string },
+                                    key: string | number
+                                ) => {
                                     const { value, name } = item;
 
                                     return (
-                                        <option value={value}>{name}</option>
+                                        <option key={key} value={value}>
+                                            {name}
+                                        </option>
                                     );
                                 }
                             )}

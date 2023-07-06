@@ -10,7 +10,7 @@ const config = {
     database: {
         mongodb: {
             uri: defaultTo(
-                'mongodb://localhost:27017/printshop',
+                'mongodb+srv://imani:FTeZoHw9vWei8tX4@cluster0.eqr0uj3.mongodb.net/printshop',
                 process.env.MONGO_URI
             ),
             options: {

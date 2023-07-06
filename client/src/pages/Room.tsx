@@ -6,17 +6,13 @@ import { Button } from '@chakra-ui/react';
 import { useOrder } from '../context/OrderContext';
 import { useAuth } from '../context/AuthContext';
 
+// service
+import { DOMAIN } from '../services';
+
 const Room = () => {
     const navigate = useNavigate();
 
-    const {
-        getOrders,
-        createOrder,
-        updateOrder,
-        getOrder,
-        removeOrder,
-        orders
-    } = useOrder();
+    const { getOrders, updateOrder, orders } = useOrder();
 
     const { user } = useAuth();
 
@@ -61,7 +57,7 @@ const Room = () => {
                         <a
                             rel="noreferrer"
                             target={'_blank'}
-                            href={`http://localhost:3030/uploads/${item}`}
+                            href={`${DOMAIN}/uploads/${item}`}
                         >
                             <div className="bg-slate-100 p-1 m-1">
                                 <p className="text-sm text-slate-500 m-2">
@@ -78,7 +74,7 @@ const Room = () => {
                                 ? currentOrder?.product?.name
                                 : '-'}
                         </b>
-                        <div className="flex flex-col">
+                        {/* <div className="flex flex-col">
                             <p className="mt-4">Custmer Details</p>
                             <div className="flex">
                                 <div className="mt-4 flex flex-1 flex-col">
@@ -114,7 +110,7 @@ const Room = () => {
                                     </h3>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="flex border rounded p-4 mt-4">
                         <div className="flex flex-1 flex-col">
@@ -208,7 +204,7 @@ const Room = () => {
                                         }}
                                         key={_id}
                                     >
-                                        <div className="flex flex-1 flex-col w-36">
+                                        {/* <div className="flex flex-1 flex-col w-36">
                                             <div className="flex flex-col">
                                                 <p className="text-sm text-slate-500">
                                                     Customer
@@ -221,7 +217,7 @@ const Room = () => {
                                                 </p>
                                                 <h3>{phoneNumber}</h3>
                                             </div>
-                                        </div>
+                                        </div> */}
                                         <div className="flex flex-1 flex-col w-36">
                                             <div className="flex flex-col">
                                                 <p className="text-sm text-slate-500">
@@ -243,14 +239,14 @@ const Room = () => {
                                                 </p>
                                                 <h3>{department}</h3>
                                             </div>
-                                            <div className="flex flex-1 flex-col  pt-2">
+                                            {/* <div className="flex flex-1 flex-col  pt-2">
                                                 <p className="text-sm text-slate-500">
                                                     Cost
                                                 </p>
                                                 <h3>{`GHS ${
                                                     totalcost / 100
                                                 }`}</h3>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                 );
